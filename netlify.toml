@@ -1,6 +1,7 @@
 [build]
+  base = "warmheart"
   command = "npm run build"
-  publish = "dist"
+  publish = "warmheart/dist"
 
 [[redirects]]
   from = "/*"
