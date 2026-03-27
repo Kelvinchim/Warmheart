@@ -1,9 +1,0 @@
-[build]
-  base = "warmheart"
-  command = "npm run build"
-  publish = "warmheart/dist"
-
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
