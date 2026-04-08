@@ -32,3 +32,4 @@ Connected to Netlify. Push to main branch to trigger deployment.
 Orders are confirmed via WhatsApp. Customers fill in name, phone, location
 then are directed to WhatsApp with a pre-filled order message.
 Payment via Airtel Money, TNM Mpamba, bank transfer, or cash on pickup.
+<!-- store-dev -->
