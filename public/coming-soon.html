@@ -608,21 +608,42 @@ updateCountdown();
 setInterval(updateCountdown, 1000);
 
 // ── EMAIL SIGNUP ──
-function submitEmail() {
-  const input = document.getElementById('emailInput');
-  const val = input.value.trim();
+async function submitEmail() {
+  const input  = document.getElementById('emailInput');
+  const btn    = document.querySelector('#emailForm button');
+  const val    = input.value.trim();
+
   if (!val || !val.includes('@')) {
-    input.style.borderBottom = '1px solid rgba(196,75,43,0.6)';
+    input.style.outline = '1px solid rgba(196,75,43,0.7)';
     input.focus();
     return;
   }
-  // Store locally (replace with Mailchimp/backend call)
-  const list = JSON.parse(localStorage.getItem('wh_emails') || '[]');
-  if (!list.includes(val)) list.push(val);
-  localStorage.setItem('wh_emails', JSON.stringify(list));
 
-  document.getElementById('emailForm').style.display = 'none';
-  document.getElementById('formSuccess').style.display = 'block';
+  btn.textContent = '...';
+  btn.disabled = true;
+  input.disabled = true;
+
+  try {
+    const res  = await fetch('/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: val }),
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      document.getElementById('emailForm').style.display = 'none';
+      document.getElementById('formSuccess').style.display = 'block';
+    } else {
+      throw new Error(data.error || 'Unknown error');
+    }
+  } catch (err) {
+    console.error('Subscribe error:', err);
+    btn.textContent = 'Try Again';
+    btn.disabled = false;
+    input.disabled = false;
+    input.style.outline = '1px solid rgba(196,75,43,0.7)';
+  }
 }
 
 document.getElementById('emailInput').addEventListener('keydown', e => {
