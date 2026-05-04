@@ -1,0 +1,5 @@
+# Serve the React store as homepage
+/  /index.html  200
+
+# SPA fallback
+/*  /index.html  200
