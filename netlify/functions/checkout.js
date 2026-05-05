@@ -31,7 +31,7 @@ exports.handler = async (event) => {
       body: JSON.stringify({
         amount: String(total), currency: "MWK",
         email, first_name, last_name,
-        callback_url: BASE_URL + "/api/verify?tx_ref=" + tx_ref,
+        callback_url: BASE_URL + "/.netlify/functions/verify?tx_ref=" + tx_ref,
         return_url:   BASE_URL + "/?order=success&tx_ref=" + tx_ref,
         tx_ref,
         customization: {title:"WARM.HEART", description},
