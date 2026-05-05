@@ -10,8 +10,8 @@ export const handler = async (event) => {
       };
     }
 
-    const response = await fetch(
-      `https://api.paychangu.com/transaction/verify/${tx_ref}`,
+   const response = await fetch(
+  `https://api.paychangu.com/verify-payment/${tx_ref}`,
       {
         method: "GET",
         headers: {
