@@ -12,7 +12,8 @@ exports.handler = async (event) => {
   try { ({ items, customer } = JSON.parse(event.body)); }
   catch { return { statusCode: 400, headers, body: JSON.stringify({ error: "Invalid JSON" }) }; }
 
-  if (!items?.length || !customer?.name || !customer?.phone) {
+ if (!items?.length || !customer?.name || !customer?.phone) {
+ {
     return { statusCode: 400, headers, body: JSON.stringify({ error: "Name and phone are required" }) };
   }
 
