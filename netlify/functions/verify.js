@@ -1,6 +1,14 @@
 export async function handler(event) {
   try {
-    const { tx_ref } = JSON.parse(event.body || "{}");
+    // ✅ Support BOTH GET and POST
+    let tx_ref = event.queryStringParameters?.tx_ref;
+
+    if (!tx_ref && event.body) {
+      try {
+        const body = JSON.parse(event.body);
+        tx_ref = body.tx_ref;
+      } catch {}
+    }
 
     if (!tx_ref) {
       console.log("NO TX_REF RECEIVED");
@@ -25,12 +33,14 @@ export async function handler(event) {
 
     const data = await response.json();
 
-    // THIS IS WHAT YOU NEED TO SEE
     console.log("PAYCHANGU VERIFY RAW:", JSON.stringify(data));
 
+    // ✅ FIXED LOGIC
     const paid =
-      data?.data?.status === "success" ||
-      data?.status === "success";
+      data?.status === "success" &&
+      ["success", "successful", "paid", "completed"].includes(
+        String(data?.data?.status || "").toLowerCase()
+      );
 
     return {
       statusCode: 200,
