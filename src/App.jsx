@@ -1,5 +1,5 @@
-import StoreClean from "./StoreClean";
+import WarmHeartStore from "./WarmHeartStore";
 
 export default function App() {
-  return <StoreClean />;
+  return <WarmHeartStore />;
 }
