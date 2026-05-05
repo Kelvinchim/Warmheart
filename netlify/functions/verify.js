@@ -18,7 +18,7 @@ exports.handler = async (event) => {
         headers:{Authorization:"Bearer "+SECRET_KEY,Accept:"application/json"}
       });
       const data = await res.json();
-      console.log("Verify GET response:", JSON.stringify(data));
+      console.log("PAYCHANGU VERIFY RAW:", JSON.stringify(data));
       const paid = data.status === "success" &&
         (data.data?.status === "successful" || data.data?.status === "pending" || status === "successful");
       return {statusCode:302,headers:{...headers,Location:BASE_URL+"/?order="+(paid?"success":"failed")+"&tx_ref="+tx_ref},body:""};
