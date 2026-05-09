@@ -42,18 +42,28 @@ exports.handler = async (event) => {
     });
 
     const data = await res.json();
-    console.log("Paychangu response:", JSON.stringify(data));
+    console.log("Paychangu full response:", JSON.stringify(data));
 
     const ok = data.status === "success" || data.status === "successful";
     if (!res.ok || !ok) {
       const msg = data.message || (typeof data.error === "string" ? data.error : JSON.stringify(data.error)) || "Payment initiation failed";
-      return {statusCode:400,headers,body:JSON.stringify({error:msg})};
+      return {statusCode:400,headers,body:JSON.stringify({error:msg,debug:data})};
     }
 
-    const payment_url = data.data?.checkout_url || data.data?.link || data.checkout_url;
-    if (!payment_url) return {statusCode:400,headers,body:JSON.stringify({error:"No checkout URL"})};
+    // Try every known field PayChangu uses for the checkout URL
+    const payment_url =
+      data.data?.checkout_url ||
+      data.data?.link         ||
+      data.data?.payment_url  ||
+      data.data?.url          ||
+      data.checkout_url       ||
+      data.link               ||
+      data.payment_url;
 
-    return {statusCode:200,headers,body:JSON.stringify({success:true,payment_url,tx_ref})};
+    // Return full data so frontend can log it and we can see the real field name
+    if (!payment_url) return {statusCode:400,headers,body:JSON.stringify({error:"No checkout URL in PayChangu response",debug:data})};
+
+    return {statusCode:200,headers,body:JSON.stringify({success:true,payment_url,tx_ref,debug:data})};
   } catch(err) {
     console.error("Checkout error:", err);
     return {statusCode:500,headers,body:JSON.stringify({error:"Server error"})};
