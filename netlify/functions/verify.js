@@ -9,8 +9,9 @@ exports.handler = async (event) => {
   if (event.httpMethod === "GET") {
     const tx_ref = event.queryStringParameters?.tx_ref;
     const status = event.queryStringParameters?.status;
-    if (!tx_ref) return {statusCode:400,headers,body:JSON.stringify({error:"Missing tx_ref"})};
-    if (status === "failed" || status === "cancelled")
+    if (!tx_ref) return {statusCode:302,headers:{...headers,Location:BASE_URL+"/?order=failed"},body:""};
+    const failStatuses = ["failed","cancelled","canceled","failure","error","timeout","declined","rejected"];
+    if (failStatuses.includes((status||"").toLowerCase()))
       return {statusCode:302,headers:{...headers,Location:BASE_URL+"/?order=failed&tx_ref="+tx_ref},body:""};
 
     try {
