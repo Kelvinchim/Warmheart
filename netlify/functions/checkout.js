@@ -13,6 +13,7 @@ exports.handler = async (event) => {
   }
 
   const SECRET_KEY = process.env.PAYCHANGU_SECRET_KEY;
+  if (!SECRET_KEY) return {statusCode:500,headers,body:JSON.stringify({error:"PAYCHANGU_SECRET_KEY not set in Netlify environment variables"})};
   const BASE_URL   = process.env.URL || "https://warmheart.studio";
   const total      = items.reduce((s,i) => s + i.price * i.quantity, 0);
   const description = items.map(i => i.name + " x" + i.quantity + " (" + i.size + ")").join(", ");
