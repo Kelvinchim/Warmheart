@@ -28,15 +28,16 @@ exports.handler = async (event) => {
     const res = await fetch("https://api.paychangu.com/payment", {
       method: "POST",
       headers: {Accept:"application/json","Content-Type":"application/json",Authorization:"Bearer "+SECRET_KEY},
-     body: JSON.stringify({
-  amount: String(total),
-  currency: "MWK",
-  email, first_name, last_name,
-  return_url: BASE_URL + "/?order=success&tx_ref=" + tx_ref,
-  tx_ref,
-  customization: {title:"WARM.HEART", description},
-  meta: {phone:customer.phone||"", location:customer.location||"", notes:customer.notes||"", items:JSON.stringify(items)},
-}),
+      body: JSON.stringify({
+        amount: String(total),
+        currency: "MWK",
+        email, first_name, last_name,
+        return_url: BASE_URL + "/.netlify/functions/verify?tx_ref=" + tx_ref,
+        tx_ref,
+        customization: {title:"WARM.HEART", description},
+        meta: {phone:customer.phone||"", location:customer.location||"", notes:customer.notes||"", items:JSON.stringify(items)},
+      }),
+    });
 
     const data = await res.json();
     console.log("Paychangu response:", JSON.stringify(data));
