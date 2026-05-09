@@ -33,7 +33,8 @@ exports.handler = async (event) => {
         amount: String(total),
         currency: "MWK",
         email, first_name, last_name,
-        return_url: BASE_URL + "/.netlify/functions/verify?tx_ref=" + tx_ref,
+        return_url:   BASE_URL + "/.netlify/functions/verify?tx_ref=" + tx_ref,
+        callback_url: BASE_URL + "/.netlify/functions/verify",
         tx_ref,
         customization: {title:"WARM.HEART", description},
         meta: {phone:customer.phone||"", location:customer.location||"", notes:customer.notes||"", items:JSON.stringify(items)},
@@ -44,7 +45,10 @@ exports.handler = async (event) => {
     console.log("Paychangu response:", JSON.stringify(data));
 
     const ok = data.status === "success" || data.status === "successful";
-    if (!res.ok || !ok) return {statusCode:400,headers,body:JSON.stringify({error:data.message||"Payment initiation failed"})};
+    if (!res.ok || !ok) {
+      const msg = data.message || (typeof data.error === "string" ? data.error : JSON.stringify(data.error)) || "Payment initiation failed";
+      return {statusCode:400,headers,body:JSON.stringify({error:msg})};
+    }
 
     const payment_url = data.data?.checkout_url || data.data?.link || data.checkout_url;
     if (!payment_url) return {statusCode:400,headers,body:JSON.stringify({error:"No checkout URL"})};
