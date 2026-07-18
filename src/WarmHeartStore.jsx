@@ -23,7 +23,7 @@ const currency = (v) => `MWK ${Number(v || 0).toLocaleString()}`;
 
 const PRODUCTS = [
   {
-    id: 1, name: "Core Tee — Rich Brown", price: 40000, category: "T-Shirts",
+    id: 1, name: "Core Tee — Rich Brown", price: 100, category: "T-Shirts",
     color: "Rich Brown", fit: "Oversized", material: "260gsm heavyweight cotton",
     stock: "Drop live", image: PHOTO_HERO_FRONT, altImage: PHOTO_FLOCK_DETAIL,
     gallery: [PHOTO_HERO_FRONT, PHOTO_FLOCK_DETAIL, PHOTO_GROUP],
@@ -32,7 +32,7 @@ const PRODUCTS = [
     sizes: ["S","M","L","XL","XXL"], sku: "WH-CT-BRN",
   },
   {
-    id: 2, name: "Core Tee — Ivory", price: 40000, category: "T-Shirts",
+    id: 2, name: "Core Tee — Ivory", price: 100, category: "T-Shirts",
     color: "Ivory", fit: "Oversized", material: "260gsm heavyweight cotton",
     stock: "Limited pieces", image: PHOTO_FEMALE_WALK, altImage: PHOTO_GROUP,
     gallery: [PHOTO_FEMALE_WALK, PHOTO_GROUP, PHOTO_FLOCK_DETAIL],
@@ -41,7 +41,7 @@ const PRODUCTS = [
     sizes: ["S","M","L","XL"], sku: "WH-CT-IVY",
   },
   {
-    id: 3, name: "Core Tee — Black", price: 40000, category: "T-Shirts",
+    id: 3, name: "Core Tee — Black", price: 100, category: "T-Shirts",
     color: "Black", fit: "Oversized", material: "260gsm heavyweight cotton",
     stock: "Available now", image: PHOTO_HANGER, altImage: PHOTO_BACK_NECK,
     gallery: [PHOTO_HANGER, PHOTO_BACK_NECK, PHOTO_FLOCK_DETAIL],
@@ -50,7 +50,7 @@ const PRODUCTS = [
     sizes: ["S","M","L","XL","XXL"], sku: "WH-CT-BLK",
   },
   {
-    id: 4, name: "Core Tee — Mocha", price: 40000, category: "T-Shirts",
+    id: 4, name: "Core Tee — Mocha", price: 100, category: "T-Shirts",
     color: "Mocha", fit: "Oversized", material: "260gsm heavyweight cotton",
     stock: "5 left", image: PHOTO_GROUP, altImage: PHOTO_HERO_FRONT,
     gallery: [PHOTO_GROUP, PHOTO_HERO_FRONT, PHOTO_FLOCK_DETAIL],
